@@ -17,8 +17,8 @@ import java.util.Properties;
  */
 public class CommentGenerator extends DefaultCommentGenerator {
     private boolean addRemarkComments = false;
-    private static final String EXAMPLE_SUFFIX="Example";
-    private static final String API_MODEL_PROPERTY_FULL_CLASS_NAME="io.swagger.annotations.ApiModelProperty";
+    private static final String EXAMPLE_SUFFIX = "Example";
+    private static final String API_MODEL_PROPERTY_FULL_CLASS_NAME = "io.swagger.annotations.ApiModelProperty";
 
 
     /**
@@ -41,11 +41,11 @@ public class CommentGenerator extends DefaultCommentGenerator {
         if (addRemarkComments && StringUtility.stringHasValue(remarks)) {
             //addFieldJavaDoc(field, remarks);
             //数据库中特殊字符需要转义
-            if(remarks.contains("\"")){
-                remarks = remarks.replace("\"","'");
+            if (remarks.contains("\"")) {
+                remarks = remarks.replace("\"", "'");
             }
             //给model的字段添加swagger注解
-            field.addJavaDocLine("@ApiModelProperty(value = \""+remarks+"\")");
+            field.addJavaDocLine("@ApiModelProperty(value = \"" + remarks + "\")");
         }
     }
 
@@ -68,7 +68,7 @@ public class CommentGenerator extends DefaultCommentGenerator {
     public void addJavaFileComment(CompilationUnit compilationUnit) {
         super.addJavaFileComment(compilationUnit);
         //只在model中添加swagger注解类的导入
-        if(!compilationUnit.isJavaInterface()&&!compilationUnit.getType().getFullyQualifiedName().contains(EXAMPLE_SUFFIX)){
+        if (!compilationUnit.isJavaInterface() && !compilationUnit.getType().getFullyQualifiedName().contains(EXAMPLE_SUFFIX)) {
             compilationUnit.addImportedType(new FullyQualifiedJavaType(API_MODEL_PROPERTY_FULL_CLASS_NAME));
         }
     }

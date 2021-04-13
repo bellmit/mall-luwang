@@ -12,6 +12,7 @@ import java.util.Random;
 
 /**
  * 会员管理实现类
+ *
  * @author luWang
  * @date 2021/4/13 - 11:00
  * @day_of_week: 星期二
@@ -24,7 +25,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     private String REDIS_KEY_PREFIX_AUTH_CODE;
     @Value("${redis.key.expire.authCode}")
     private Long AUTH_CODE_EXPIRE_SECONDS;
-    
+
     @Override
     public CommonResult generateAuthCode(String telephone) {
         StringBuilder sb = new StringBuilder();
@@ -40,14 +41,14 @@ public class UmsMemberServiceImpl implements UmsMemberService {
 
     @Override
     public CommonResult verifyAuthCode(String telephone, String authCode) {
-        if(StringUtils.isBlank(authCode)){
+        if (StringUtils.isBlank(authCode)) {
             return CommonResult.failed("请输入验证码");
         }
         String realAuthCode = redisService.get(REDIS_KEY_PREFIX_AUTH_CODE + telephone);
         boolean result = authCode.equals(realAuthCode);
-        if(result){
+        if (result) {
             return CommonResult.success(null, "验证码校验成功");
-        }else {
+        } else {
             return CommonResult.failed("验证码不正确");
         }
     }

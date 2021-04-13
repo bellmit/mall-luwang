@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 会员注册登录管理controller
+ *
  * @author luWang
  * @date 2021/4/13 - 10:57
  * @day_of_week: 星期二
@@ -35,7 +36,7 @@ public class UmsMemberController {
     @RequestMapping(value = "verifyAuthCode", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult verifyAuthCode(@RequestParam String telephone,
-                                    @RequestParam String authCode) {
+                                       @RequestParam String authCode) {
         return umsMemberService.verifyAuthCode(telephone, authCode);
     }
 }
